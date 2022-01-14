@@ -6,12 +6,15 @@ items:
     metadata:
       name: crw-test-app
       labels:
-        app: crw-test
-        crw-test-component: app
+        app.kubernetes.io/component: crw-test-app-pod
+        app.kubernetes.io/instance: crw-test-app-1
+        app.kubernetes.io/name: crw-test-app
+        app.kubernetes.io/part-of: crw-test
+        app.kubernetes.io/version: 1.0.0
     spec:
       containers:
         - name: run
-          image: openjdk:17
+          image: ubi8/openjdk-17
           command: sleep
           args:
             - infinity
@@ -22,10 +25,14 @@ items:
     metadata:
       name: crw-test-app
       labels:
-        app: crw-test
+        app.kubernetes.io/component: crw-test-app-service
+        app.kubernetes.io/instance: crw-test-app-1
+        app.kubernetes.io/name: crw-test-app
+        app.kubernetes.io/part-of: crw-test
+        app.kubernetes.io/version: 1.0.0
     spec:
       selector:
-        crw-test-component: app
+        app.kubernetes.io/component: crw-test-app-pod
       ports:
         - port: 8080
           targetPort: 8080
@@ -34,7 +41,11 @@ items:
     metadata:
       name: crw-test-app
       labels:
-        app: crw-test
+        app.kubernetes.io/component: crw-test-app-route
+        app.kubernetes.io/instance: crw-test-app-1
+        app.kubernetes.io/name: crw-test-app
+        app.kubernetes.io/part-of: crw-test
+        app.kubernetes.io/version: 1.0.0
     spec:
       to:
         kind: Service

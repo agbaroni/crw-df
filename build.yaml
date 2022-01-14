@@ -6,7 +6,11 @@ items:
     metadata:
       name: crw-test-build
       labels:
-        app: crw-test
+        app.kubernetes.io/component: crw-test-build-pod
+        app.kubernetes.io/instance: crw-test-build-1
+        app.kubernetes.io/name: crw-test-build
+        app.kubernetes.io/part-of: crw-test
+        app.kubernetes.io/version: 1.0.0
     spec:
       containers:
         - name: build
