@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: v1
+    kind: Pod
+    metadata:
+      name: crw-test-build
+      labels:
+        app: crw-test
+    spec:
+      containers:
+        - name: build
+          image: maven
+          command: sleep
+          args:
+            - infinity
