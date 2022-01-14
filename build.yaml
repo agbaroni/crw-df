@@ -14,7 +14,7 @@ items:
     spec:
       containers:
         - name: build
-          image: maven
+          image: quay.io/eclipse/che-java11-maven
           command:
             - sleep
           args:
