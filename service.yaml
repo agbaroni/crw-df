@@ -12,6 +12,9 @@ items:
       containers:
         - name: run
           image: openjdk:17
+          command: sleep
+          args:
+            - infinity
           ports:
             - containerPort: 8080
   - apiVersion: v1
