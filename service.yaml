@@ -15,7 +15,8 @@ items:
       containers:
         - name: run
           image: ubi8/openjdk-17
-          command: sleep
+          command:
+            - sleep
           args:
             - infinity
           ports:
