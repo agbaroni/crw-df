@@ -16,73 +16,73 @@ items:
       POSTGRES_DB: crw
       POSTGRES_PASSWORD: CRW123!
       POSTGRES_USER: crw
-  # - apiVersion: v1
-  #   kind: ConfigMap
-  #   metadata:
-  #     name: crw-test-dbms
-  #     labels:
-  #       app.kubernetes.io/component: crw-test-dbms-config-map
-  #       app.kubernetes.io/instance: crw-test-dbms-1
-  #       app.kubernetes.io/name: crw-test-dbms
-  #       app.kubernetes.io/part-of: crw-test
-  #       app.kubernetes.io/version: 1.0.0
-  #   data:
-  #     setup.sql: |
-  #       CREATE TABLE USERS (ID INTEGER PRIMARY KEY, FIRST_NAME VARCHAR(64), LAST_NAME VARCHAR(64), VERSION INTEGER DEFAULT 0);
-  #       CREATE TABLE ACCOUNTS (USERNAME VARCHAR(32) PRIMARY KEY, PASSWORD VARCHAR(16), USER INTEGER REFERENCES USERS(ID), VERSION INTEGER DEFAULT 0);
-  #       INSERT INTO USERS VALUES (0, 'Alessio Giovanni', 'Baroni');
-  #       INSERT INTO ACCOUNTS VALUES ('alessio', 'Alessio123!', 0);
-  # - apiVersion: apps/v1
-  #   kind: Deployment
-  #   metadata:
-  #     name: crw-test-dbms
-  #     labels:
-  #       app.kubernetes.io/component: crw-test-dbms-deployment
-  #       app.kubernetes.io/instance: crw-test-dbms-1
-  #       app.kubernetes.io/name: crw-test-dbms
-  #       app.kubernetes.io/part-of: crw-test
-  #       app.kubernetes.io/version: 1.0.0
-  #   spec:
-  #     selector:
-  #       matchLabels:
-  #         app.kubernetes.io/component: crw-test-dbms-pod
-  #     template:
-  #       metadata:
-  #         name: crw-test-dbms
-  #         labels:
-  #           app.kubernetes.io/component: crw-test-dbms-pod
-  #           app.kubernetes.io/instance: crw-test-dbms-1
-  #           app.kubernetes.io/name: crw-test-dbms
-  #           app.kubernetes.io/part-of: crw-test
-  #           app.kubernetes.io/version: 1.0.0
-  #       spec:
-  #         containers:
-  #           - name: crw-test-dbms
-  #             image: postgres
-  #             ports:
-  #               - containerPort: 5432
-  #             envFrom:
-  #               - secretRef: crw-test-dbms
-  #             volumeMounts:
-  #               - name: setup-data
-  #                 mountPath: /docker-entrypoint-initdb.d
-  #         volumes:
-  #           - name: setup-data
-  #             configMap:
-  #               name: crw-test-dbms
-  # - apiVersion: v1
-  #   kind: Service
-  #   metadata:
-  #     name: crw-test-dbms
-  #     labels:
-  #       app.kubernetes.io/component: crw-test-dbms-service
-  #       app.kubernetes.io/instance: crw-test-dbms-1
-  #       app.kubernetes.io/name: crw-test-dbms
-  #       app.kubernetes.io/part-of: crw-test
-  #       app.kubernetes.io/version: 1.0.0
-  #   spec:
-  #     selector:
-  #       app.kubernetes.io/component: crw-test-dbms-pod
-  #     ports:
-  #       - port: 5432
-  #         targetPort: 5432
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: crw-test-dbms
+      labels:
+        app.kubernetes.io/component: crw-test-dbms-config-map
+        app.kubernetes.io/instance: crw-test-dbms-1
+        app.kubernetes.io/name: crw-test-dbms
+        app.kubernetes.io/part-of: crw-test
+        app.kubernetes.io/version: 1.0.0
+    data:
+      setup.sql: |
+        CREATE TABLE USERS (ID INTEGER PRIMARY KEY, FIRST_NAME VARCHAR(64), LAST_NAME VARCHAR(64), VERSION INTEGER DEFAULT 0);
+        CREATE TABLE ACCOUNTS (USERNAME VARCHAR(32) PRIMARY KEY, PASSWORD VARCHAR(16), USER INTEGER REFERENCES USERS(ID), VERSION INTEGER DEFAULT 0);
+        INSERT INTO USERS VALUES (0, 'Alessio Giovanni', 'Baroni');
+        INSERT INTO ACCOUNTS VALUES ('alessio', 'Alessio123!', 0);
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: crw-test-dbms
+      labels:
+        app.kubernetes.io/component: crw-test-dbms-deployment
+        app.kubernetes.io/instance: crw-test-dbms-1
+        app.kubernetes.io/name: crw-test-dbms
+        app.kubernetes.io/part-of: crw-test
+        app.kubernetes.io/version: 1.0.0
+    spec:
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: crw-test-dbms-pod
+      template:
+        metadata:
+          name: crw-test-dbms
+          labels:
+            app.kubernetes.io/component: crw-test-dbms-pod
+            app.kubernetes.io/instance: crw-test-dbms-1
+            app.kubernetes.io/name: crw-test-dbms
+            app.kubernetes.io/part-of: crw-test
+            app.kubernetes.io/version: 1.0.0
+        spec:
+          containers:
+            - name: crw-test-dbms
+              image: postgres
+              ports:
+                - containerPort: 5432
+              envFrom:
+                - secretRef: crw-test-dbms
+              volumeMounts:
+                - name: setup-data
+                  mountPath: /docker-entrypoint-initdb.d
+          volumes:
+            - name: setup-data
+              configMap:
+                name: crw-test-dbms
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: crw-test-dbms
+      labels:
+        app.kubernetes.io/component: crw-test-dbms-service
+        app.kubernetes.io/instance: crw-test-dbms-1
+        app.kubernetes.io/name: crw-test-dbms
+        app.kubernetes.io/part-of: crw-test
+        app.kubernetes.io/version: 1.0.0
+    spec:
+      selector:
+        app.kubernetes.io/component: crw-test-dbms-pod
+      ports:
+        - port: 5432
+          targetPort: 5432
