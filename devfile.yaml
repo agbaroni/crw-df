@@ -7,6 +7,12 @@ projects:
       location: https://github.com/agbaroni/crw-app.git
       type: git
 components:
+  - alias: vscode-xml
+    type: chePlugin
+    id: redhat/vscode-xml/latest
+  - alias: java
+    type: chePlugin
+    id: redhat/java/latest
   - alias: dbms
     reference: dbms.yaml
     type: openshift
@@ -26,7 +32,7 @@ commands:
     actions:
       - type: exec
         component: build
-        command: "mvn clean package"
+        command: "mvn -s configuration/settings.xml clean package"
         workdir: "${CHE_PROJECTS_ROOT}/crw-app"
   - name: esegui
     actions:
