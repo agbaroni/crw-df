@@ -61,8 +61,22 @@ items:
               image: postgres
               ports:
                 - containerPort: 5432
-              envFrom:
-                - secretRef: crw-test-dbms
+              env:
+                - name: POSTGRES_DB
+                  valueFrom:
+                    secretKeyRef:
+                      name: crw-test-dbms
+                      key: POSTGRES_DB
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: crw-test-dbms
+                      key: POSTGRES_PASSWORD
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: crw-test-dbms
+                      key: POSTGRES_USER
               volumeMounts:
                 - name: setup-data
                   mountPath: /docker-entrypoint-initdb.d
