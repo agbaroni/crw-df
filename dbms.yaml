@@ -29,7 +29,7 @@ items:
     data:
       setup.sql: |
         CREATE TABLE USERS (ID INTEGER PRIMARY KEY, FIRST_NAME VARCHAR(64), LAST_NAME VARCHAR(64), VERSION INTEGER DEFAULT 0);
-        CREATE TABLE ACCOUNTS (USERNAME VARCHAR(32) PRIMARY KEY, PASSWORD VARCHAR(16), USER INTEGER REFERENCES USERS(ID), VERSION INTEGER DEFAULT 0);
+        CREATE TABLE ACCOUNTS (USERNAME VARCHAR(32) PRIMARY KEY, PASSWORD VARCHAR(16), USER_ INTEGER REFERENCES USERS(ID), VERSION INTEGER DEFAULT 0);
         INSERT INTO USERS VALUES (0, 'Alessio Giovanni', 'Baroni');
         INSERT INTO ACCOUNTS VALUES ('alessio', 'Alessio123!', 0);
   - apiVersion: apps/v1
@@ -62,6 +62,8 @@ items:
               ports:
                 - containerPort: 5432
               env:
+                - name: PGDATA
+                  value: /var/lib/postgresql/data/pgdata
                 - name: POSTGRES_DB
                   valueFrom:
                     secretKeyRef:
